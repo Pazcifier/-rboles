@@ -15,6 +15,28 @@ const char *TipoRol[] = {
 	"Personal de Servicios"
 };
 
+const char *Grupos[] = {
+	"Sociedad de Ingenieros Automotrices (FSAE)",
+	"Eco UCAB",
+	"Voluntariado de Trabajo en Establecimientos Penitenciarios (VTEP)",
+	"Voluntariado  de Trabajo en Asesoria Juridica (VTAJ)",
+	"Voluntariado de Letras (Volet)",
+	"Escuela de Comunicacion Social",
+	"Voluntariado de la Escuela de Educacion (EDUCAB)",
+	"Voluntariado de Administracion y Contaduria (VAC)",
+	"Voluntariado de Economia (VEC)",
+	"Voluntarios en Red",
+	"Voluntarios Profesionales",
+	"Voluntarios Las Mayas",
+	"Pastoral",
+	"Coral Infantil, Narra Cuentos",
+	"Propedeutico Verbal",
+	"Propedeutico Numerico",
+	"Proyecto de Voluntariado de Ciencias Sociales (PROVOCS)",
+	"Voluntariado de Psicologia",
+	"Voluntariado de Derechos Humanos"
+};
+
 struct Voluntariado {
 	int FE;
 	int Codigo;
@@ -59,6 +81,139 @@ void Final() {
 	cout << "Presione cualquier tecla para continuar";
 	getch();
 	system("CLS");
+}
+
+int VoluntariadosUCAB() {					//Función que muestra todos los código de voluntariado del sistema
+	int Codigo;
+	do {
+		system("CLS");
+		cout << endl << "		VOLUNTARIADOS UCAB" << endl << endl;
+		cout << "1001 - Sociedad de Ingenieros Automotrices (FSAE)" << endl;
+		cout << "1002 - Eco UCAB" << endl;
+		cout << "1003 - Voluntariado de Trabajo en Establecimientos Penitenciarios (VTEP)" << endl;
+		cout << "1004 - Voluntariado  de Trabajo en Asesoria Juridica (VTAJ)" << endl;
+		cout << "1005 - Voluntariado de Letras (Volet)" << endl;		
+		cout << "1006 - Escuela de Comunicacion Social" << endl;
+		cout << "1007 - Voluntariado de la Escuela de Educacion (EDUCAB)" << endl;
+		cout << "1008 - Voluntariado de Administracion y Contaduria (VAC)" << endl;		
+		cout << "1009 - Voluntariado de Economia (VEC)" << endl;
+		cout << "1010 - Voluntarios en Red" << endl;
+		cout << "1011 - Voluntarios Profesionales" << endl;
+		cout << "1012 - Voluntarios Las Mayas" << endl;
+		cout << "1013 - Pastoral" << endl;
+		cout << "1014 - Coral Infantil, Narra Cuentos" << endl;
+		cout << "1015 - Propedeutico Verbal" << endl;
+		cout << "1016 - Propedeutico Numerico" << endl;
+		cout << "1017 - Proyecto de Voluntariado de Ciencias Sociales (PROVOCS)" << endl;
+		cout << "1018 - Voluntariado de Psicologia" << endl;
+		cout << "1019 - Voluntariado de Derechos Humanos" << endl;
+		cout << endl << "Ingrese codigo de agrupacion del voluntariado: ";
+		cin >> Codigo;
+	} while ((Codigo < 1001) || (Codigo > 1019));	//Dependiendo de si este está en el rango o no, se registra el código en el sistema
+	return Codigo;
+}
+
+void LlenadoV (Misericordioso *&P, int Codigo) {
+	string Nombre;			
+	switch (Codigo) {
+		case 1001 : {
+			Nombre = "Sociedad de Ingenieros Automotrices (FSAE)";
+			P -> V -> CupoMax = 15;
+			break;
+		}
+		case 1002 : {
+			Nombre = "Eco UCAB";
+			P -> V -> CupoMax = 20;
+			break;
+		}
+		case 1003 : {
+			Nombre = "Voluntariado de Trabajo en Establecimientos Penitenciarios (VTEP)";
+			P -> V -> CupoMax = 15;
+			break;
+		}
+		case 1004 : {
+			Nombre = "Voluntariado de Trabajo en Asesoria Juridica (VTAJ)";
+			P -> V -> CupoMax = 7;
+			break;
+		}
+		case 1005 : {
+			Nombre = "Voluntariado de Letras (Volet)";
+			P -> V -> CupoMax = 18;
+			break;
+		}
+		case 1006 : {
+			Nombre = "Escuela de Comunicación Social";
+			P -> V -> CupoMax = 35;
+			break;
+		}
+		case 1007 : {
+			Nombre = "Voluntariado de la Escuela de Educacion (EDUCAB)";
+			P -> V -> CupoMax = 60;
+			break;
+		}
+		case 1008 : {
+			Nombre = "Voluntariado de Administración y Contaduría (VAC)";
+			P -> V -> CupoMax = 15;
+			break;
+		}
+		case 1009 : {
+			Nombre = "Voluntariado de Economía (VEC)";
+			P -> V -> CupoMax = 20;
+			break;
+		}
+		case 1010 : {
+			Nombre = "Voluntarios en Red" ;
+			P -> V -> CupoMax = 40;
+			break;
+		}
+		case 1011 : {
+			Nombre = "Voluntarios Profesionales";
+			P -> V -> CupoMax = 4;
+			break;
+		}
+		case 1012 : {
+			Nombre = "Voluntarios Las Mayas";
+			P -> V -> CupoMax = 5;
+			break;
+		}
+		case 1013 : {
+			Nombre = "Pastoral";
+			P -> V -> CupoMax = 10;
+			break;
+		}
+		case 1014 : {
+			Nombre = "Coral Infantil, Narra Cuentos";
+			P -> V -> CupoMax = 10;
+			break;
+		}
+		case 1015 : {
+			Nombre = "Propedeutico Verbal";
+			P -> V -> CupoMax = 15;
+			break;
+		}
+		case 1016 : {
+			Nombre = "Propedeutico Numerico";
+			P -> V -> CupoMax = 21;
+			break;
+		}
+		case 1017 : {
+			Nombre = "Proyecto de Voluntariado de Ciencias Sociales";
+			P -> V -> CupoMax = 12;
+			break;
+		}
+		case 1018 : {
+			Nombre = "Voluntariado de Psicologia";
+			P -> V -> CupoMax = 42;
+			break;
+		}
+		case 1019 : {
+			Nombre = "Voluntario de Derechos Humanos";
+			P -> V -> CupoMax = 500;
+			break;
+		}
+	}
+	P -> V -> Nombre = Nombre;
+	P -> V -> Codigo = Codigo;	
 }
 
 void MostrarMisericordiosoArbol (ArbolM *M) {	
@@ -215,23 +370,61 @@ void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {
 		P -> Voluntariados++;
 	}
 	if (!a) {		
-		cout<<"Ingrese el nombre de la agrupacion: "; //cambiar con las constantes
-		getline(cin,raiz->Nombre);		
-		cout<<"Ingrese el objetivo de la agrupacion: ";
-		getline(cin,raiz->Objetivo); 
-		cout<<"Ingrese el cupo maximo: ";
-		cin>>raiz->CupoMax; 
-		a=true;
+		LlenadoV(P, dato);
+		cout << "Ingrese el objetivo de la agrupacion: ";
+		getline(cin, P -> V -> Objetivo);
 	}
 }
 
 void RVoluntariado (Misericordioso *P, Voluntariado *&V, int &Cen) {
 	int Dato; 
 	bool a = false;
-	cout << "Codigo de agrupacion: ";
-	cin >> Dato;
+	Dato = VoluntariadosUCAB();
 	cin.ignore(); 
 	AVLvol(P,V,Dato,Cen,a);
+}
+
+void AmigoSolidarioInfo () {							
+	int Decision, Aporte, Frecuencias;
+	string Codigo, Nombre;
+	do {
+		cout << "Ingrese el codigo de carnet de Amigo Solidario (tres numeros/caracteres): 4M150L-";	
+		getline(cin, Codigo);																																	
+	} while (Codigo.length() != 3);																		
+	do {
+		cout << "Ingrese el codigo de asociado AVESSOC (tres numeros/caracteres): 4V3550C-";
+		getline(cin, Codigo);
+	} while (Codigo.length() != 3);
+	cout << "Ingrese el nombre de asociado AVESSOC: ";
+	getline(cin, Nombre);
+	cout << "Tipo de aporte de Amigo Solidario" << endl << endl;	
+	cout << "[1] MONETARIO" << endl;
+	cout << "[2] INSUMOS MEDICOS" << endl;
+	cout << "[3] MEDICINAS" << endl;
+	cout << "[4] OTROS" << endl;
+	Decision = getch();
+	cout << "Frecuencia de pago" << endl << endl;
+	cout << "[1] MENSUAL" << endl;
+	cout << "[2] BIMENSUAL" << endl;
+	cout << "[3] TRIMESTRAL" << endl;
+	cout << "[4] SEMESTRAL" << endl;
+	cout << "[5] ANUAL" << endl;
+	cout << "[6] UNICO" << endl;
+	Decision = getch();
+}
+
+void ApostoladoInfo () {					
+	int Decision;
+	string Descripcion;
+	cout << "Ingrese tipo de apostolado" << endl << endl;
+	cout << "[1] TESTIMONIO" << endl;
+	cout << "[2] PALABRA" << endl;
+	cout << "[3] ACCION" << endl;
+	cout << "[4] ORACION" << endl;
+	cout << "[5] SACRIFICIO" << endl;
+	Decision = getch();
+	cout << "Ingrese la descripcion de apostolado: ";
+	getline(cin, Descripcion);	
 }
 
 void Registro (Misericordioso *&P, int &Cen) {
@@ -242,6 +435,9 @@ void Registro (Misericordioso *&P, int &Cen) {
 	P -> Vol = false;
 	P -> Ami = false;
 	P -> Apos = false;
+	P -> Voluntariados = 0;
+	P -> Amigos = 0;
+	P -> Apostolados = 0;
 	cout << "Ingrese la cedula del misericordioso: ";
 	cin >> P -> Cedula;
 	cin.ignore();
@@ -303,6 +499,7 @@ void Registro (Misericordioso *&P, int &Cen) {
 			case 0x32 : {
 				system("CLS");				
 				P -> Ami = true;
+				AmigoSolidarioInfo();
 				P -> Amigos++;
 				system("CLS");
 				break;
@@ -310,6 +507,7 @@ void Registro (Misericordioso *&P, int &Cen) {
 			case 0x33 : {
 				system("CLS");
 				P -> Apos = true;
+				ApostoladoInfo();
 				P -> Apostolados++;
 				system("CLS");
 				break;
@@ -724,6 +922,7 @@ int main() {
 				system("CLS");
 				CrearMisericordioso(P, Usuarios);
 				Usuarios = true;
+				ArbolMisericordioso = false;
 				break;
 			}
 			case 0x32 : {
@@ -769,7 +968,6 @@ int main() {
 											system("CLS");
 											cout << "Estos son los misericordiosos registrados en Preorden" << endl << endl;
 											PreordenM(M);
-											cout << endl;
 											Final();
 											break;
 										}
@@ -777,7 +975,6 @@ int main() {
 											system("CLS");
 											cout << "Estos son los misericordiosos registrados en Inorden" << endl << endl;
 											InordenM(M);
-											cout << endl;
 											Final();
 											break;
 										}
@@ -785,7 +982,6 @@ int main() {
 											system("CLS");
 											cout << "Estos son los misericordiosos registrados en Posorden" << endl << endl;
 											PosordenM(M);
-											cout << endl;
 											Final();
 											break;
 										}
@@ -819,7 +1015,6 @@ int main() {
 										system("CLS");
 										cout << "Estos son los voluntariados del misericordioso en Preorden" << endl << endl;
 										PreordenV(auxP -> V);
-										cout << endl;
 										Final();
 										break;
 									}
@@ -827,7 +1022,6 @@ int main() {
 										system("CLS");
 										cout << "Estos son los voluntariados del misericordioso en Inorden" << endl << endl;
 										InordenV(auxP -> V);
-										cout << endl;
 										Final();
 										break;
 									}
@@ -835,7 +1029,6 @@ int main() {
 										system("CLS");
 										cout << "Estos son los voluntariados del misericordioso en Posorden" << endl << endl;
 										PosordenV(auxP -> V);
-										cout << endl;
 										Final();
 										break;
 									}
