@@ -113,9 +113,9 @@ int VoluntariadosUCAB() {					//Función que muestra todos los código de volunt
 	return Codigo;
 }
 
-void LlenadoV (Misericordioso *&P, int Codigo) {
+void LlenadoV (Misericordioso *&P, int Codigo) {		//Funcion de llenado de Voluntariado
 	string Nombre;			
-	switch (Codigo) {
+	switch (Codigo) {									//Dependiendo del código que se de, se asignará cupo y nombre del voluntariado
 		case 1001 : {
 			Nombre = "Sociedad de Ingenieros Automotrices (FSAE)";
 			P -> V -> CupoMax = 15;
@@ -213,10 +213,12 @@ void LlenadoV (Misericordioso *&P, int Codigo) {
 		}
 	}
 	P -> V -> Nombre = Nombre;
-	P -> V -> Codigo = Codigo;	
+	P -> V -> Codigo = Codigo;
+	cout << "Ingrese el objetivo de la agrupacion: ";
+	getline(cin, P -> V -> Objetivo);	
 }
 
-void MostrarMisericordiosoArbol (ArbolM *M) {	
+void MostrarMisericordiosoArbol (ArbolM *M) {	//Función que muestra todos los datos del arbol de misericordiosos
    	cout << "Cedula: " << M -> Cedula << endl;
 	cout << "Nombres: " << M -> Nombre << endl;
 	cout << "Apellidos: " << M -> Apellido << endl;
@@ -233,7 +235,7 @@ void MostrarMisericordiosoArbol (ArbolM *M) {
 	cout << endl;
 }
 
-void MostrarMisericordioso (Misericordioso *P) {
+void MostrarMisericordioso (Misericordioso *P) {	//Función que muestra todos los datos de la lista de misericordiosos
 	cout << "Cedula: " << P -> Cedula << endl;
 	cout << "Nombres: " << P -> Nombre << endl;
 	cout << "Apellidos: " << P -> Apellido << endl;
@@ -249,7 +251,7 @@ void MostrarMisericordioso (Misericordioso *P) {
 	}
 }
 
-void MostrarVoluntariado (Voluntariado *V) {
+void MostrarVoluntariado (Voluntariado *V) {		//Función que muestra los voluntariados de un misericordioso
 	cout << "Codigo de la agrupacion: " << V -> Codigo << endl;
 	cout << "Nombre de la agrupacion: " << V -> Nombre << endl;
 	cout << "Objetivo de la agrupacion: " << V -> Objetivo << endl;
@@ -257,12 +259,12 @@ void MostrarVoluntariado (Voluntariado *V) {
 	cout << endl;
 }
 
-void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {	
+void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {	//Función que crea el árbol de voluntariados
 	Voluntariado *q,*r,*x;
-	if (raiz!=NULL) {
-		if (dato < raiz->Codigo) {
+	if (raiz!=NULL) {		//Se observa si la raíz es distinto de NULL
+		if (dato < raiz->Codigo) {			//Si el dato dado es menor que el dato de la raíz, entonces se llama de nuevo a la función y se lleva al otro caso (cuando el dato es menor)
 			AVLvol(P, raiz -> izq,dato,cen,a);
-			if (cen==1) {
+			if (cen==1) {		//Cuando se crea un nodo, se colocan los factores de equilibrios necesarios
 				switch(raiz->FE) {
 					case 1 : {
 						raiz->FE=0;
@@ -275,7 +277,7 @@ void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {
 					}
 					case -1 : {
 						q=raiz->izq;
-						if (q->FE<=0) {
+						if (q->FE<=0) {		//Y se revisa cada uno de los nodos para ver si es necesaria hacer una rotación
 						//rotacion I.I.
 							raiz->izq=q->der;
 							q->der=raiz;
@@ -307,7 +309,7 @@ void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {
 			}		
 		}
 		else {
-			if (dato > raiz->Codigo) {
+			if (dato > raiz->Codigo) {			//El mismo caso ocurre para cuando el dato dado es mayor que el de la raíz
 				AVLvol(P, raiz->der,dato,cen,a);
 				if (cen==1)	{
 					switch(raiz->FE) {
@@ -353,14 +355,14 @@ void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {
 					}
 				}
 			}
-		 	else {
+		 	else {		//Si un misericordioso se le ingresa el mismo codigo, se da a conocer que no se puede ingresar el mismo dato
 				system("CLS");
 				cout<<"La clave"<< raiz->Codigo<<" ya existe";
 				getch();
 			}
 		}
 	}
-	else {	
+	else {		//Si no hay raiz, se crea una
 		raiz= new(Voluntariado);
 		raiz->Codigo=dato;
 		raiz->izq=NULL;
@@ -369,14 +371,12 @@ void AVLvol(Misericordioso *P, Voluntariado *&raiz,int dato, int &cen,bool &a) {
 		cen=1;
 		P -> Voluntariados++;
 	}
-	if (!a) {		
+	if (!a) {		//Función de ingreso para obtener el codigo y la descripcion
 		LlenadoV(P, dato);
-		cout << "Ingrese el objetivo de la agrupacion: ";
-		getline(cin, P -> V -> Objetivo);
 	}
 }
 
-void RVoluntariado (Misericordioso *P, Voluntariado *&V, int &Cen) {
+void RVoluntariado (Misericordioso *P, Voluntariado *&V, int &Cen) { //Función encargada de todos los llamados de voluntariados
 	int Dato; 
 	bool a = false;
 	Dato = VoluntariadosUCAB();
@@ -384,7 +384,7 @@ void RVoluntariado (Misericordioso *P, Voluntariado *&V, int &Cen) {
 	AVLvol(P,V,Dato,Cen,a);
 }
 
-void AmigoSolidarioInfo () {							
+void AmigoSolidarioInfo () {				//Funcion encargada del registo de amigos solidarios de un misericordioso			
 	int Decision, Aporte, Frecuencias;
 	string Codigo, Nombre;
 	do {
@@ -413,7 +413,7 @@ void AmigoSolidarioInfo () {
 	Decision = getch();
 }
 
-void ApostoladoInfo () {					
+void ApostoladoInfo () {			//Funcion encargada del registro de apostolados de un misericordioso			
 	int Decision;
 	string Descripcion;
 	cout << "Ingrese tipo de apostolado" << endl << endl;
@@ -427,7 +427,7 @@ void ApostoladoInfo () {
 	getline(cin, Descripcion);	
 }
 
-void Registro (Misericordioso *&P, int &Cen) {
+void Registro (Misericordioso *&P, int &Cen) {	//Función encargada del registro completo de misericordioso
 	int Decision;
 	bool Menu = true;
 	P = new Misericordioso;
@@ -438,7 +438,7 @@ void Registro (Misericordioso *&P, int &Cen) {
 	P -> Voluntariados = 0;
 	P -> Amigos = 0;
 	P -> Apostolados = 0;
-	cout << "Ingrese la cedula del misericordioso: ";
+	cout << "Ingrese la cedula del misericordioso: ";			//Se pide su cédula, nombre, apellido y rol en la universidad
 	cin >> P -> Cedula;
 	cin.ignore();
 	cout << "Ingrese los nombres del misericordioso: ";
@@ -480,7 +480,7 @@ void Registro (Misericordioso *&P, int &Cen) {
 		}
 	}
 	system("CLS");
-	while (Menu) {
+	while (Menu) {			//Posteriormente, se da el llenado de sus actividades, cada opción es una actividad distinta
 		MostrarMisericordioso(P);
 		cout << endl;
 		cout << "[1] AGREGAR SOLICITUD DE VOLUNTARIADO" << endl;
@@ -521,22 +521,21 @@ void Registro (Misericordioso *&P, int &Cen) {
 	}
 }
 
-void CrearMisericordioso (Misericordioso *&P, bool Usuarios) {
+void CrearMisericordioso (Misericordioso *&P, bool Usuarios) { //Función encargada de la creacion de misericordiosos
 	Misericordioso *Q = NULL, *T = NULL;
 	int N, Cen = 0;
 	bool Primero = false;
-	cout << "Cuantos misericordiosos desea agregar?: ";					
+	cout << "Cuantos misericordiosos desea agregar?: ";					//Se pide la cantidad de misericordiosos a agregar
 	cin >> N;
 	cin.ignore();
 	system("CLS");
-	if (!Usuarios) {
+	if (!Usuarios) {									//Dependiendo de si hay misericordiosos registados o no, se hará una creación de listas inserando al final o una inserción al final
 		for (int i = 1; i <= N; i++) {										
 			if (!Primero) {													
 				Registro(P, Cen);
 				P -> sig = NULL;
 				T = P;
 				Primero = true;
-				Usuarios = true;
 			}
 			else {
 				Registro(Q, Cen);
@@ -557,8 +556,8 @@ void CrearMisericordioso (Misericordioso *&P, bool Usuarios) {
 	}
 }
 
-void AVLM(ArbolM *&raiz,Misericordioso *P,int dato, int &cen,bool &b) {	
-	ArbolM *q,*r,*x;
+void AVLM(ArbolM *&raiz,Misericordioso *P,int dato, int &cen,bool &b) {	//Función encargada de la creación de árbol de misericordiosos
+	ArbolM *q,*r,*x;							//Posee el mismo proceso de la creación del árbol de voluntariados, a excepción que se toma de la lista de misericordiosos ya creada
 	if (raiz != NULL) {
 		if (dato < raiz->Cedula) {
 			AVLM(raiz -> izq,P,dato,cen,b);
@@ -681,7 +680,7 @@ void AVLM(ArbolM *&raiz,Misericordioso *P,int dato, int &cen,bool &b) {
 	}
 }
 
-void PreordenV (Voluntariado *V) {
+void PreordenV (Voluntariado *V) {			//Funciones de recorridos de los árboles
 	if (V != NULL) {
     	MostrarVoluntariado(V); 
 		PreordenV(V -> izq);
@@ -699,9 +698,9 @@ void InordenV (Voluntariado *V) {
 
 void PosordenV (Voluntariado *V) {
 	if (V != NULL) {
-		PosordenV(V -> izq);
         PosordenV(V -> der);
-    	MostrarVoluntariado(V);        
+    	MostrarVoluntariado(V);  
+		PosordenV(V -> izq);      
 	}
 }
 
@@ -723,13 +722,13 @@ void InordenM (ArbolM *M) {
 
 void PosordenM (ArbolM *M) {
 	if (M != NULL) {   	
-		PosordenM(M -> izq);
         PosordenM(M -> der);
-    	MostrarMisericordiosoArbol(M);
+    	MostrarMisericordiosoArbol(M);		
+		PosordenM(M -> izq);
 	}
 }
 
-void DatosArbolM(Misericordioso *P, ArbolM *&M){
+void DatosArbolM(Misericordioso *P, ArbolM *&M){	//Función encargada de llamar y convertir la lista de misericordiosos a árbol
 	int cen=0,dato; bool b=false; 
 	while (P!=NULL) {  
 		AVLM(M,P,P->Cedula,cen,b);
@@ -737,9 +736,10 @@ void DatosArbolM(Misericordioso *P, ArbolM *&M){
 		P=P->sig;
 	}	
 }
-
-void BuscarCodigoVoluntariado (Misericordioso *P, int X, bool Primero) {
-	if (P != NULL) {
+							// /////// FUNCIONES DE CONSULTAS /////// //
+							
+void BuscarCodigoVoluntariado (Misericordioso *P, int X, bool Primero) {	//Función encargada de buscar a los voluntariados con un código dado
+	if (P != NULL) {		//Se recorre por cada nodo de la lista de misericordiosos su árbol, si este tiene el código que se dio anteriormente, se imprime
 		if ((P -> Vol) && (P -> V -> Codigo == X)) {
 			if (!Primero) {
 				cout << "Estos son los misericordiosos que pertenecen a este voluntariado:" << endl << endl;
@@ -752,8 +752,8 @@ void BuscarCodigoVoluntariado (Misericordioso *P, int X, bool Primero) {
 	}
 }
 
-void MayorCantidad (Misericordioso *P, int &Mayor) {
-	if (P != NULL) {
+void MayorCantidad (Misericordioso *P, int &Mayor) {		//Función encargada de buscar al misericordioso con el mayor número de voluntariados
+	if (P != NULL) {									//Se recorre cada nodo de la lista de misericordiosos y se compara quién posee mayor cantidad de voluntariados
 		if (P -> Voluntariados > Mayor) {
 			Mayor = P -> Voluntariados;
 		}
@@ -761,8 +761,8 @@ void MayorCantidad (Misericordioso *P, int &Mayor) {
 	}
 }
 
-void MasVoluntariados (Misericordioso *P, bool Primero, int X) {
-	if (P != NULL) {
+void MasVoluntariados (Misericordioso *P, bool Primero, int X) {	//Función que imprime al misericordioso con la mayor cantidad de voluntariados
+	if (P != NULL) {							//Dada la función anterior, se compara cada cantidad de voluntariados de los misericordiosos y se imprimen los que coincidan en cantidad con el mayor
 		if (P -> Voluntariados == X) {
 			if (!Primero) {
 				cout << "Estos son los misericordiosos con la mayor cantidad de voluntariados:" << endl << endl;
@@ -792,37 +792,37 @@ void MostrarCedulaNombre (Misericordioso *P) {		//Función que ordena y muestra 
 	cout << endl;
 }
 
-void BuscarMisericordioso (Misericordioso *&P, int X) {
+void BuscarMisericordioso (Misericordioso *&P, int X) {		//Función que dada una cédula, imprime a un misericoridoso
 	if ((P != NULL) && (P -> Cedula != X)) {
 		BuscarMisericordioso(P -> sig, X);
 	}
 }
 
-void ConsultasM(ArbolM *M,int &consulta,int &cedula) {
+void ConsultasM(ArbolM *M,int &consulta,int &cedula) {		//Función que imrpime las consultas 1, 2 y 3
 	if (M != NULL) {
-    	if (consulta==1) {
-    		if (M->Cedula==cedula) {
+    	if (consulta==1) {			//CONSULTA 1: Dada una cédula, mostrar los datos del misericordioso en el árbol
+    		if (M->Cedula==cedula) {		//Se da una cédula y se busca coincidencia, si la hay, se imprime
 				MostrarMisericordiosoArbol(M);	
 			}
 		}
-		if (consulta==2) {
-			if (M->Voluntariados>=2) {
+		if (consulta==2) {		//CONSULTA 2: Mostrar los misericordiosos con más de dos voluntariados
+			if (M->Voluntariados>=2) {			//Se leen cada una de las cantidades de voluntariados de los misericordiosos, si son más de dos, se imprime
 				cout << "Estos son los misericordiosos con mas de dos voluntariados" << endl << endl;
 				MostrarMisericordiosoArbol(M);	
 			}
 		}
-		if (consulta==3) {
-			if (!M->Apos ) {
+		if (consulta==3) {		//CONSULTA 3: Mostrar los misericordiosos sin apostolados
+			if (!M->Apos ) {			//Se leen cada una de las cantidades de apostolados, si esta es 0, entonces se imprime
 				cout << "Estos son los misericordiosos sin apostolados" << endl << endl;
 				MostrarMisericordiosoArbol(M);	
 			}
 		}
-		ConsultasM(M -> izq,consulta,cedula);
+		ConsultasM(M -> izq,consulta,cedula);			//Cada una de las consultas, dependiendo la eleguida se repite con cada nodo del árbol en preorden
         ConsultasM(M -> der,consulta,cedula);
 	}
 }
 
-void MenuConsultas (ArbolM *M, Misericordioso *P, bool ArbolMisericordioso) {
+void MenuConsultas (ArbolM *M, Misericordioso *P, bool ArbolMisericordioso) {	//Función que muestra el menú de consultas
 	int consulta, Decision, Cedula, Codigo, Mayor = 0;
 	bool Menu = true, Primero = false;
 	while (Menu) {
@@ -887,7 +887,7 @@ void MenuConsultas (ArbolM *M, Misericordioso *P, bool ArbolMisericordioso) {
 			}
 			case 0x36 : {
 				system("CLS");
-				//Falta
+				cout << "No hicimos esta parte profesor";
 				Final();
 				break;
 			}
@@ -899,7 +899,7 @@ void MenuConsultas (ArbolM *M, Misericordioso *P, bool ArbolMisericordioso) {
 	}
 }
 
-int main() {
+int main() {			//Programa principal
 	int Codigo, Mayor = 0, Decision;
 	Misericordioso *P = NULL, *auxP = NULL;
 	ArbolM *M = NULL;
@@ -936,9 +936,8 @@ int main() {
 				break;
 			}
 			case 0x33 : {
-				//Mostrar Voluntariados
-				//Ingresar Codigo
-				//Editar
+				cout << "No hicimos esto profesor";
+				Final();
 				break;
 			}
 			case 0x34 : {
